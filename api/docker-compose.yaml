@@ -1,0 +1,35 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    volumes:
+      - db:/var/lib/postgres
+    ports:
+      - '5432:5432'
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: tasks
+    networks:
+      - first-network
+  # tasks_api:
+  #   build:
+  #     context: .
+  #   container_name: tasks_api
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - postgres
+  #   environment:
+  #     - DATABASE_URL=postgres://user:123456@postgres:5432/tasks?schema=public
+  #   networks:
+  #     - first-network
+
+networks:
+  first-network:
+    driver: bridge
+
+volumes:
+  db:
