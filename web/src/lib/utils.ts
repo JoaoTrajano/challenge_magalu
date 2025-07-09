@@ -14,7 +14,7 @@ export function formatDateBR(date: string | Date | null | undefined): string {
 
     return format(new Date(date), "dd/MM/yyyy");
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return "-";
   }
 }

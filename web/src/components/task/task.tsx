@@ -1,11 +1,12 @@
 import { Button } from "../ui/button";
 import { Trash } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
+import { formatDateBR } from "@/lib/utils";
 
 type Props = {
   id: string;
   title: string;
-  createdAt: string;
+  createdAt: Date;
 };
 
 export const Task = ({ id, title, createdAt }: Props) => {
@@ -17,7 +18,7 @@ export const Task = ({ id, title, createdAt }: Props) => {
       </div>
 
       <div className="flex items-center gap-4">
-        <span className="text-sm text-gray-500">{createdAt}</span>
+        <span className="text-sm text-gray-500">{formatDateBR(createdAt)}</span>
         <Button variant="ghost" size="icon">
           <Trash className="w-5 h-5" />
         </Button>
