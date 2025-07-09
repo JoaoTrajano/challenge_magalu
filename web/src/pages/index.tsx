@@ -1,7 +1,7 @@
 export default function Home() {
   return (
-    <div>
-      <h2>Tarefas</h2>
-    </div>
+    <main className="flex justify-center items-center h-screen">
+      <h2 className="text-2xl font-bold">Tarefas</h2>
+    </main>
   );
 }
