@@ -1,5 +1,3 @@
-"use client";
-
 import { useAddTask } from "@/api/tasks";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -17,6 +15,7 @@ export const Form = () => {
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
+    register,
   } = useForm<AddTaskSchemaType>({
     defaultValues: {
       title: "",
@@ -34,11 +33,14 @@ export const Form = () => {
 
   return (
     <form className="flex gap-2 mb-4" onSubmit={handleSubmit(handleAddTask)}>
-      <Input
-        className="flex-1 border rounded px-3 py-2"
-        placeholder="Digite uma nova tarefa..."
-      />
-      {errors.title && <FormMessage message={errors.title.message} />}
+      <div className="space-y-2">
+        <Input
+          className="flex-1 border rounded px-3 py-2"
+          placeholder="Digite uma nova tarefa..."
+          {...register("title")}
+        />
+        {errors.title && <FormMessage message={errors.title.message} />}
+      </div>
       <Button
         type="submit"
         className=" text-white px-4 py-2 rounded"

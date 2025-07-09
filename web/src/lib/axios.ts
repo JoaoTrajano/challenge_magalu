@@ -1,6 +1,3 @@
-// lib/api.ts
-"use client";
-
 import axios from "axios";
 import { publicEnv } from "./env";
 
