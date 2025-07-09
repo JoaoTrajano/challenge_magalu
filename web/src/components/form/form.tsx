@@ -5,6 +5,7 @@ import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormMessage } from "../form-message";
+import { toast } from "sonner";
 
 const addTaskSchema = z.object({
   title: z.string().min(1, "Título da tarefa é obrigatório."),
@@ -16,6 +17,7 @@ export const Form = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     register,
+    reset,
   } = useForm<AddTaskSchemaType>({
     defaultValues: {
       title: "",
@@ -23,7 +25,15 @@ export const Form = () => {
     resolver: zodResolver(addTaskSchema),
   });
 
-  const { mutateAsync: addTask } = useAddTask();
+  const { mutateAsync: addTask } = useAddTask({
+    async onSuccess() {
+      reset();
+      toast.success("Tarefa adicionada com sucesso!");
+    },
+    onError() {
+      toast.error("Não foi possível adicionar a tarefa!");
+    },
+  });
 
   async function handleAddTask(data: AddTaskSchemaType) {
     await addTask({
