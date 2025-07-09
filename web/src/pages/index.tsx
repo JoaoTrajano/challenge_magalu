@@ -1,6 +1,6 @@
-import { Filters } from "@/components/filters/filters";
-import { Form } from "@/components/form/form";
-import { TaskList } from "@/components/task-list/task-list";
+import { Filters } from "@/components/filters";
+import { Form } from "@/components/form";
+import { TaskList } from "@/components/task-list";
 
 export default function Home() {
   return (
