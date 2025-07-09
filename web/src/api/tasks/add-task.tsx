@@ -5,20 +5,20 @@ import { api } from "@/lib/axios";
 
 import { Tasks } from "./@types";
 
-export type CreateTaskParams = {
+export type AddTaskParams = {
   title: string;
 };
 
-export const createTask = async (body: CreateTaskParams): Promise<Tasks> => {
+export const addTask = async (body: AddTaskParams): Promise<Tasks> => {
   const { data } = await api.post<Tasks>("/tasks", body);
   return data;
 };
 
-export const useCreateTask = (
-  options?: UseMutationOptions<Tasks, AxiosError, CreateTaskParams>
+export const useAddTask = (
+  options?: UseMutationOptions<Tasks, AxiosError, AddTaskParams>
 ) =>
-  useMutation<Tasks, AxiosError, CreateTaskParams>({
+  useMutation<Tasks, AxiosError, AddTaskParams>({
     mutationKey: ["create-task"],
-    mutationFn: async (body) => await createTask(body),
+    mutationFn: async (body) => await addTask(body),
     ...options,
   });
