@@ -2,7 +2,7 @@ import { Filters } from "@/components/filters";
 import { Form } from "@/components/form";
 import { TaskList } from "@/components/task-list";
 
-export default function Home() {
+export default function TasksPage() {
   return (
     <main className="max-w-md mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Minhas Tarefas</h1>
