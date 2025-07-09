@@ -5,3 +5,8 @@ export type Tasks = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export enum TaskStatus {
+  PENDING = "PENDING",
+  COMPLETED = "COMPLETED",
+}
