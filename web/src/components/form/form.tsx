@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormMessage } from "../form-message";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 
 const addTaskSchema = z.object({
   title: z.string().min(1, "Título da tarefa é obrigatório."),
@@ -13,6 +14,8 @@ const addTaskSchema = z.object({
 type AddTaskSchemaType = z.infer<typeof addTaskSchema>;
 
 export const Form = () => {
+  const queryClient = useQueryClient();
+
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -29,6 +32,7 @@ export const Form = () => {
     async onSuccess() {
       reset();
       toast.success("Tarefa adicionada com sucesso!");
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
     onError() {
       toast.error("Não foi possível adicionar a tarefa!");
