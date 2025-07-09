@@ -1,8 +1,6 @@
+import { Filters } from "@/components/Filters/filters";
 import { Form } from "@/components/Form/form";
 import { Task } from "@/components/task";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
 
 const mockTasks = [
   { id: "1", title: "Comprar pão", done: false, createdAt: "24/04/2024" },
@@ -17,37 +15,11 @@ const mockTasks = [
 ];
 
 export default function Home() {
-  const [filter, setFilter] = useState<"all" | "done" | "pending">("all");
   return (
     <main className="max-w-md mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Minhas Tarefas</h1>
       <Form />
-      <div className="flex gap-2 mb-4">
-        <Button
-          onClick={() => setFilter("all")}
-          className={`px-4 py-1 rounded border ${
-            filter === "all" ? "bg-blue-100 text-blue-700" : "text-gray-100"
-          }`}
-        >
-          Todas
-        </Button>
-        <Button
-          onClick={() => setFilter("pending")}
-          className={`px-4 py-1 rounded border ${
-            filter === "pending" ? "bg-blue-100 text-blue-700" : "text-gray-100"
-          }`}
-        >
-          Pendentes
-        </Button>
-        <Button
-          onClick={() => setFilter("done")}
-          className={`px-4 py-1 rounded border ${
-            filter === "done" ? "bg-blue-100 text-blue-700" : "text-gray-100"
-          }`}
-        >
-          Concluídas
-        </Button>
-      </div>
+      <Filters />
 
       <div className="space-y-2">
         {mockTasks.map((task) => (
