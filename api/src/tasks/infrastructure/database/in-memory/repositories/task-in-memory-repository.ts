@@ -30,7 +30,7 @@ export class TaskInMemoryRepository extends TaskRepository {
 
   async fetch(status: TaskStatus): Promise<TaskEntity[]> {
     const tasks = this.tasks.filter((task) => {
-      if (status && !task.status.includes(status)) return false;
+      if (status && !task.statusValue.includes(status)) return false;
       return true;
     });
 
