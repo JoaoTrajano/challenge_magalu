@@ -47,6 +47,7 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
     useUpdateTaskStatus({
       async onSuccess(_, { id, newStatus }) {
         updateTaskStatusOnCache(id, newStatus);
+        queryClient.invalidateQueries({ queryKey: ["tasks"] });
       },
       onError: () => {
         toast.error("Erro ao atualizar status da tarefa!");
