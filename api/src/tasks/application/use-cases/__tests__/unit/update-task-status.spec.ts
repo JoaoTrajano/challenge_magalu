@@ -18,7 +18,7 @@ describe('UpdateTaksStatus unit test', () => {
   it('should throw an error if the tasks not exist', async () => {
     const result = await sut.execute({
       id: 'id-not-exist',
-      completed: TaskStatus.PENDING,
+      newStatus: TaskStatus.PENDING,
     });
 
     expect(result.isLeft()).toBeTruthy();
@@ -30,7 +30,7 @@ describe('UpdateTaksStatus unit test', () => {
 
     await sut.execute({
       id: repo.tasks[0].id,
-      completed: TaskStatus.COMPLETED,
+      newStatus: TaskStatus.COMPLETED,
     });
 
     expect(repo.tasks[0].statusValue).toEqual('COMPLETED');
@@ -42,7 +42,7 @@ describe('UpdateTaksStatus unit test', () => {
 
     repo.tasks.push(task);
 
-    await sut.execute({ id: repo.tasks[0].id, completed: TaskStatus.PENDING });
+    await sut.execute({ id: repo.tasks[0].id, newStatus: TaskStatus.PENDING });
 
     expect(repo.tasks[0].statusValue).toEqual('PENDING');
   });

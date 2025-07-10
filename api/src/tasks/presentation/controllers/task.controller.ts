@@ -92,7 +92,7 @@ export class TaskController {
   async patchTask(@Param('id') id: string, @Body() body: UpdateTaskStatusBody) {
     const result = await this.updateTaskStatusUseCase.execute({
       id,
-      completed: body.completed,
+      newStatus: body.newStatus,
     });
     if (result.isLeft()) throw new BadRequestException();
 

@@ -7,7 +7,7 @@ import { UseCase } from '../use-case.interface';
 
 type UpdateTaskStatusUseCaseInput = {
   id: string;
-  completed: TaskStatus;
+  newStatus: TaskStatus;
 };
 
 type UpdateTaskStatusUseCaseOutput = Either<
@@ -29,7 +29,7 @@ export class UpdateTaskStatusUseCase
     const taskFound = await this.taskRepository.fetchById(input.id);
     if (!taskFound) return left(new ResourceNotFoundError('Task not found'));
 
-    taskFound.updateStatusValue = input.completed;
+    taskFound.updateStatusValue = input.newStatus;
 
     const taskUpdated = await this.taskRepository.update(taskFound);
     return rigth({ task: taskUpdated });

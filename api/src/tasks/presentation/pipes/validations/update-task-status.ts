@@ -4,7 +4,7 @@ import { ZodValidationPipe } from '@/shared/pipes/zod-validation';
 import { TaskStatus } from '@/tasks/domain/entities/task.entity';
 
 const updateTaskStatusBodySchema = z.object({
-  completed: z.nativeEnum(TaskStatus),
+  newStatus: z.nativeEnum(TaskStatus),
 });
 
 export type UpdateTaskStatusBody = z.infer<typeof updateTaskStatusBodySchema>;
