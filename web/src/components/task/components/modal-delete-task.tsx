@@ -51,7 +51,7 @@ export function ModalDeleteTask({ id }: Props) {
           <DialogHeader>
             <DialogTitle>Excluir tarefa</DialogTitle>
             <DialogDescription>
-              Tem certeza que deseja excluir esta tarefa?
+              Tem certeza de que deseja remover esta tarefa?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
