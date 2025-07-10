@@ -1,4 +1,4 @@
-import { tasksQueryOptions } from "@/api/tasks";
+import { tasksQueryOptions } from "@/api/tasks/fetch-tasks/query-options";
 import { Filters } from "@/components/filters";
 import { Form } from "@/components/form";
 import { TaskList } from "@/components/task-list";

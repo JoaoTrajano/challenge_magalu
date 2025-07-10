@@ -1,4 +1,3 @@
-import { useAddTask } from "@/api/tasks";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import z from "zod";
@@ -7,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormMessage } from "../form-message";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import { useAddTask } from "@/api/tasks";
 
 const addTaskSchema = z.object({
   title: z.string().min(1, "Título da tarefa é obrigatório."),

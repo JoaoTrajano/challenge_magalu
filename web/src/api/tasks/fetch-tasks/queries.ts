@@ -1,8 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-
 import { api } from "@/lib/axios";
-import { ResponseApi, Tasks } from "./@types";
-import { tasksQueryOptions } from ".";
+import { ResponseApi, Tasks } from "../@types";
 
 export type FetchTasksParams = {
   status?: string | null;
@@ -20,8 +17,4 @@ export async function fetchTasks({
   return {
     value: data.tasks,
   };
-}
-
-export function useFetchTasks({ status }: FetchTasksParams) {
-  return useQuery(tasksQueryOptions({ status }));
 }
