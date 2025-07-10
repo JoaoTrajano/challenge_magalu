@@ -112,7 +112,9 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
         </span>
       </div>
       <div className="flex items-center gap-4">
-        <span className="text-sm text-gray-500">{formatDateBR(createdAt)}</span>
+        <span className="text-sm text-gray-500">
+          Criado em: {formatDateBR(createdAt)}
+        </span>
         <Button variant="ghost" size="icon" onClick={handleDeleteTask}>
           {isPending ? (
             <Loader className="w-5 h-5 animate-spin" />
