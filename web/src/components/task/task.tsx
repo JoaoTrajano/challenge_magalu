@@ -18,7 +18,6 @@ export const Task = ({ id, title, createdAt }: Props) => {
 
   const { mutateAsync: deleteTask, isPending } = useDeleteTask({
     onSuccess: () => {
-      toast.success("Tarefa deletada com sucesso!");
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
     onError: () => {
