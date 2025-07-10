@@ -3,7 +3,7 @@ import { Loader, Trash } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { formatDateBR } from "@/lib/utils";
 import { useDeleteTask, useUpdateTaskStatus } from "@/api/tasks";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { ResponseApi, Tasks, TaskStatus } from "@/api/tasks/@types";
@@ -16,7 +16,7 @@ type Props = {
 };
 
 const markAsCompletedSchema = z.object({
-  completed: z.boolean(),
+  completed: z.nativeEnum(TaskStatus),
 });
 
 type MarkAsCompletedType = z.infer<typeof markAsCompletedSchema>;
@@ -25,9 +25,6 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
   const queryClient = useQueryClient();
 
   const {
-    watch,
-    setValue,
-    reset,
     formState: { isSubmitting },
   } = useForm<MarkAsCompletedType>({
     resolver: zodResolver(markAsCompletedSchema),
@@ -47,8 +44,8 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
   }, [id, deleteTask]);
 
   const { mutateAsync: updateTaskStatus } = useUpdateTaskStatus({
-    async onSuccess(_, { id, completed }) {
-      updateTaskStatusOnCache(id, completed);
+    async onSuccess(_, { id, newStatus }) {
+      updateTaskStatusOnCache(id, newStatus);
     },
     onError: () => {
       toast.error("Erro ao atualizar status da tarefa!");
@@ -56,18 +53,18 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
   });
 
   const handleUpdateTaskStatus = useCallback(
-    async (completed: boolean) => {
+    async (newStatus: TaskStatus) => {
       if (isSubmitting) return;
 
       await updateTaskStatus({
         id,
-        completed,
+        newStatus,
       });
     },
     [id, isSubmitting, updateTaskStatus]
   );
 
-  function updateTaskStatusOnCache(taskId: string, newStatus: boolean) {
+  function updateTaskStatusOnCache(taskId: string, newStatus: TaskStatus) {
     const cacheKey = ["tasks", undefined];
     const tasksListCache =
       queryClient.getQueryData<ResponseApi<Tasks[]>>(cacheKey);
@@ -78,7 +75,7 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
     }
 
     const updatedTasks = tasksListCache.value.map((task) =>
-      task.id === taskId ? { ...task, completed: newStatus } : task
+      task.id === taskId ? { ...task, status: newStatus } : task
     );
 
     queryClient.setQueryData(cacheKey, {
@@ -86,23 +83,16 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
     });
   }
 
-  const completed = watch("completed");
-
-  useEffect(() => {
-    reset({
-      completed: status === TaskStatus.COMPLETED,
-    });
-  }, [status, reset]);
-
   return (
     <div className="flex justify-between items-center p-4 border rounded-xl shadow-sm">
       <div className="flex items-center gap-2">
         <Checkbox
-          id="completed"
-          checked={completed}
+          id="task-checkbox-new-status"
+          checked={status === TaskStatus.COMPLETED}
           onCheckedChange={(checked) => {
-            setValue("completed", checked as boolean);
-            handleUpdateTaskStatus(checked as boolean);
+            handleUpdateTaskStatus(
+              (checked as boolean) ? TaskStatus.COMPLETED : TaskStatus.PENDING
+            );
           }}
         />
         <span className="text-base text-gray-800">{title}</span>

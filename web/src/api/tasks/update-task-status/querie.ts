@@ -1,16 +1,16 @@
 import { api } from "@/lib/axios";
-import { ResponseApi, Tasks } from "../@types";
+import { ResponseApi, Tasks, TaskStatus } from "../@types";
 
 export type UpdateTaskStatusParams = {
   id: string;
-  completed: boolean;
+  newStatus: TaskStatus;
 };
 
 export const updateTaskStatus = async (
   body: UpdateTaskStatusParams
 ): Promise<ResponseApi<Tasks>> => {
   const { data } = await api.patch<Tasks>(`/tasks/${body.id}`, {
-    completed: body.completed,
+    newStatus: body.newStatus,
   });
   return {
     value: data,
