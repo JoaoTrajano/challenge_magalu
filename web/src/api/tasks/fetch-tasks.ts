@@ -2,12 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 
 import { api } from "@/lib/axios";
 import { ResponseApi, Tasks } from "./@types";
+import { tasksQueryOptions } from ".";
 
-type FetchTasksParams = {
-  status?: string;
+export type FetchTasksParams = {
+  status?: string | null;
 };
 
-async function fetchTasks({
+export async function fetchTasks({
   status,
 }: FetchTasksParams): Promise<ResponseApi<Tasks[]>> {
   const { data } = await api.get<{ tasks: Tasks[] }>("/tasks", {
@@ -22,8 +23,5 @@ async function fetchTasks({
 }
 
 export function useFetchTasks({ status }: FetchTasksParams) {
-  return useQuery({
-    queryKey: ["tasks", status],
-    queryFn: () => fetchTasks({ status }),
-  });
+  return useQuery(tasksQueryOptions({ status }));
 }
