@@ -1,6 +1,6 @@
 import { Loader } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
-import { formatDateBR } from "@/lib/utils";
+import { cn, formatDateBR } from "@/lib/utils";
 import { useUpdateTaskStatus } from "@/api/tasks";
 import { useCallback } from "react";
 import { toast } from "sonner";
@@ -77,9 +77,12 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
 
   return (
     <div
-      className={`flex justify-between items-center p-4 border rounded-xl shadow-sm gap-4 hover:bg-gray-50 ${
-        status === TaskStatus.COMPLETED ? "bg-gray-50/90 opacity-50" : ""
-      }`}
+      className={cn(
+        `flex justify-between items-center p-4 border rounded-xl shadow-sm gap-4 hover:bg-gray-50`,
+        {
+          "bg-gray-50/90 opacity-50": status === TaskStatus.COMPLETED,
+        }
+      )}
     >
       <div className="flex items-center gap-2 max-w-full flex-1">
         {isUpdatingStatus ? (
