@@ -15,13 +15,17 @@ type Props = {
 
 export default function TasksPage({ dehydratedState }: Props) {
   return (
-    <main className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Minhas Tarefas</h1>
-      <Form />
-      <Filters />
-      <HydrationBoundary state={dehydratedState}>
-        <TaskList />
-      </HydrationBoundary>
+    <main className="max-w-lg mx-auto p-8 bg-gray-50 rounded-xl shadow-lg min-h-screen flex flex-col gap-6">
+      <h1 className="text-3xl font-extrabold  mb-2">Minhas Tarefas</h1>
+      <header className="mb-2">
+        <Form />
+        <Filters />
+      </header>
+      <section className="flex flex-col gap-4">
+        <HydrationBoundary state={dehydratedState}>
+          <TaskList />
+        </HydrationBoundary>
+      </section>
     </main>
   );
 }
