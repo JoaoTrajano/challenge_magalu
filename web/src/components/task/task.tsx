@@ -43,14 +43,15 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
     deleteTask({ id });
   }, [id, deleteTask]);
 
-  const { mutateAsync: updateTaskStatus } = useUpdateTaskStatus({
-    async onSuccess(_, { id, newStatus }) {
-      updateTaskStatusOnCache(id, newStatus);
-    },
-    onError: () => {
-      toast.error("Erro ao atualizar status da tarefa!");
-    },
-  });
+  const { mutateAsync: updateTaskStatus, isPending: isUpdatingStatus } =
+    useUpdateTaskStatus({
+      async onSuccess(_, { id, newStatus }) {
+        updateTaskStatusOnCache(id, newStatus);
+      },
+      onError: () => {
+        toast.error("Erro ao atualizar status da tarefa!");
+      },
+    });
 
   const handleUpdateTaskStatus = useCallback(
     async (newStatus: TaskStatus) => {
@@ -86,15 +87,19 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
   return (
     <div className="flex justify-between items-center p-4 border rounded-xl shadow-sm">
       <div className="flex items-center gap-2">
-        <Checkbox
-          id="task-checkbox-new-status"
-          checked={status === TaskStatus.COMPLETED}
-          onCheckedChange={(checked) => {
-            handleUpdateTaskStatus(
-              (checked as boolean) ? TaskStatus.COMPLETED : TaskStatus.PENDING
-            );
-          }}
-        />
+        {isUpdatingStatus ? (
+          <Loader className="w-5 h-5 animate-spin" />
+        ) : (
+          <Checkbox
+            id="task-checkbox-new-status"
+            checked={status === TaskStatus.COMPLETED}
+            onCheckedChange={(checked) => {
+              handleUpdateTaskStatus(
+                (checked as boolean) ? TaskStatus.COMPLETED : TaskStatus.PENDING
+              );
+            }}
+          />
+        )}
         <span className="text-base text-gray-800">{title}</span>
       </div>
 
