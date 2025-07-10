@@ -7,6 +7,7 @@ import { FormMessage } from "../form-message";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAddTask } from "@/api/tasks";
+import { Plus } from "lucide-react";
 
 const addTaskSchema = z.object({
   title: z.string().min(1, "Título da tarefa é obrigatório."),
@@ -61,6 +62,7 @@ export const Form = () => {
         disabled={isSubmitting}
       >
         Adicionar Tarefa
+        <Plus className="ml-2" />
       </Button>
     </form>
   );
