@@ -57,7 +57,7 @@ export const Form = () => {
       </div>
       <Button
         type="submit"
-        className=" text-white px-4 py-2 rounded"
+        className=" text-white px-4 py-2 rounded-sm"
         disabled={isSubmitting}
       >
         Adicionar Tarefa
