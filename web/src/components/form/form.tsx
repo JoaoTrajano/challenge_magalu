@@ -34,6 +34,11 @@ export const Form = () => {
       reset();
       toast.success("Tarefa adicionada com sucesso!");
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+
+      const input =
+        document.querySelector<HTMLInputElement>('input[id="title"]');
+
+      input?.focus();
     },
     onError() {
       toast.error("Não foi possível adicionar a tarefa!");
@@ -50,6 +55,7 @@ export const Form = () => {
     <form className="flex gap-2 mb-4" onSubmit={handleSubmit(handleAddTask)}>
       <div className="space-y-2">
         <Input
+          id="title"
           className="flex-1 border rounded px-3 py-2"
           placeholder="Digite uma nova tarefa..."
           {...register("title")}

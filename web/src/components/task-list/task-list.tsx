@@ -32,10 +32,9 @@ export const TaskList = () => {
     return null;
   }, [tasks, status]);
 
-  if (tasks.length === 0) return warning;
-
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 min-h-full">
+      {warning}
       {isLoading ? (
         <SkeletonTaskList />
       ) : (
