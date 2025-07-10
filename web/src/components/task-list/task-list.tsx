@@ -3,6 +3,8 @@ import { Task } from "./components/task";
 import { useMemo } from "react";
 import SkeletonTaskList from "./components/skeleton-task-list";
 import { useTaskFilter } from "../filters/hooks/useFilters";
+import { TaskStatus } from "@/api/tasks/@types";
+import { Warning } from "./components/warning";
 
 export const TaskList = () => {
   const { status } = useTaskFilter();
@@ -16,13 +18,21 @@ export const TaskList = () => {
     [responseFetchTasks]
   );
 
-  if (tasks.length === 0) {
-    return (
-      <div className="text-gray-500 text-center py-4">
-        Nenhuma tarefa adicionada.
-      </div>
-    );
-  }
+  const warning = useMemo(() => {
+    if (tasks.length > 0) return null;
+
+    if (!status) return <Warning message="Nenhuma tarefa criada." />;
+
+    if (status === TaskStatus.COMPLETED)
+      return <Warning message="Nenhuma tarefa concluída." />;
+
+    if (status === TaskStatus.PENDING)
+      return <Warning message="Nenhuma tarefa pendente." />;
+
+    return null;
+  }, [tasks, status]);
+
+  if (tasks.length === 0) return warning;
 
   return (
     <div className="space-y-2">
