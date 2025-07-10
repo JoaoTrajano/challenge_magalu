@@ -34,14 +34,15 @@ export const Form = () => {
       reset();
       toast.success("Tarefa adicionada com sucesso!");
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
-
+    },
+    onError() {
+      toast.error("Não foi possível adicionar a tarefa!");
+    },
+    onSettled() {
       const input =
         document.querySelector<HTMLInputElement>('input[id="title"]');
 
       input?.focus();
-    },
-    onError() {
-      toast.error("Não foi possível adicionar a tarefa!");
     },
   });
 
