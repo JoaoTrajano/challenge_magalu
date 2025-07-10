@@ -2,11 +2,11 @@ import { tasksQueryOptions } from "@/api/tasks/fetch-tasks/query-options";
 import { Filters } from "@/components/filters";
 import { Form } from "@/components/form";
 import { TaskList } from "@/components/task-list";
+import { queryClient } from "@/lib/react-query";
 import {
   dehydrate,
   DehydratedState,
   HydrationBoundary,
-  QueryClient,
 } from "@tanstack/react-query";
 
 type Props = {
@@ -27,7 +27,6 @@ export default function TasksPage({ dehydratedState }: Props) {
 }
 
 export async function getServerSideProps() {
-  const queryClient = new QueryClient();
   await queryClient.prefetchQuery(tasksQueryOptions({ status: null }));
 
   return {

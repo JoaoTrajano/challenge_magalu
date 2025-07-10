@@ -4,11 +4,7 @@ import { useMemo } from "react";
 import SkeletonTaskList from "./components/skeleton-task-list";
 
 export const TaskList = () => {
-  const {
-    data: responseFetchTasks,
-    isLoading,
-    isRefetching,
-  } = useFetchTasks({});
+  const { data: responseFetchTasks, isLoading } = useFetchTasks({});
 
   const tasks = useMemo(
     () => (responseFetchTasks ? responseFetchTasks.value : []),
@@ -25,17 +21,10 @@ export const TaskList = () => {
 
   return (
     <div className="space-y-2">
-      {isLoading || isRefetching ? (
+      {isLoading ? (
         <SkeletonTaskList />
       ) : (
-        tasks.map((task) => (
-          <Task
-            key={task.id}
-            id={task.id}
-            title={task.title}
-            createdAt={task.createdAt}
-          />
-        ))
+        tasks.map((task) => <Task key={task.id} data={task} />)
       )}
     </div>
   );
