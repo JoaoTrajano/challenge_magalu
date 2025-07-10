@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 
 import { ResourceNotFoundError } from '@/tasks/application/errors/resource-not-found-error';
-import { TaskEntity } from '@/tasks/domain/entities/task.entity';
+import { TaskEntity, TaskStatus } from '@/tasks/domain/entities/task.entity';
 import { TaskInMemoryRepository } from '@/tasks/infrastructure/database/in-memory/repositories/task-in-memory-repository';
 
 import { UpdateTaskStatusUseCase } from '../../update-task-status.usecase';
@@ -16,7 +16,10 @@ beforeAll(() => {
 
 describe('UpdateTaksStatus unit test', () => {
   it('should throw an error if the tasks not exist', async () => {
-    const result = await sut.execute({ id: 'id-not-exist', completed: true });
+    const result = await sut.execute({
+      id: 'id-not-exist',
+      completed: TaskStatus.PENDING,
+    });
 
     expect(result.isLeft()).toBeTruthy();
     expect(result.value).instanceOf(ResourceNotFoundError);
@@ -25,19 +28,22 @@ describe('UpdateTaksStatus unit test', () => {
   it('should be able update the tasks status to completed', async () => {
     repo.tasks.push(new TaskEntity('Test Task'));
 
-    await sut.execute({ id: repo.tasks[0].id, completed: true });
+    await sut.execute({
+      id: repo.tasks[0].id,
+      completed: TaskStatus.COMPLETED,
+    });
 
-    expect(repo.tasks[0].status).toEqual('COMPLETED');
+    expect(repo.tasks[0].statusValue).toEqual('COMPLETED');
   });
 
   it('should be able update the tasks status to pending', async () => {
     const task = new TaskEntity('Test Task');
-    task.markStatusAsPending();
+    task.updateStatusValue = TaskStatus.PENDING;
 
     repo.tasks.push(task);
 
-    await sut.execute({ id: repo.tasks[0].id, completed: false });
+    await sut.execute({ id: repo.tasks[0].id, completed: TaskStatus.PENDING });
 
-    expect(repo.tasks[0].status).toEqual('PENDING');
+    expect(repo.tasks[0].statusValue).toEqual('PENDING');
   });
 });

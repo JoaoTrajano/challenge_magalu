@@ -7,7 +7,7 @@ export enum TaskStatus {
 
 export class TaskEntity extends Entity {
   public title: string;
-  public status: TaskStatus;
+  private status: TaskStatus;
 
   constructor(title: string) {
     super();
@@ -15,11 +15,27 @@ export class TaskEntity extends Entity {
     this.status = TaskStatus.PENDING;
   }
 
-  public markStatusAsCompleted(): void {
+  get statusValue(): TaskStatus {
+    return this.status;
+  }
+
+  set updateStatusValue(status: TaskStatus) {
+    switch (status) {
+      case TaskStatus.COMPLETED:
+        this.markStatusAsCompleted();
+        break;
+      case TaskStatus.PENDING:
+        this.markStatusAsPending();
+        break;
+      default:
+    }
+  }
+
+  private markStatusAsCompleted(): void {
     this.status = TaskStatus.COMPLETED;
   }
 
-  public markStatusAsPending(): void {
+  private markStatusAsPending(): void {
     this.status = TaskStatus.PENDING;
   }
 }

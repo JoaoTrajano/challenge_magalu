@@ -1,5 +1,5 @@
 import { Either, left, rigth } from '@/shared/errors/either';
-import { TaskEntity } from '@/tasks/domain/entities/task.entity';
+import { TaskEntity, TaskStatus } from '@/tasks/domain/entities/task.entity';
 import { TaskRepository } from '@/tasks/domain/repositories/task.repository';
 
 import { ResourceNotFoundError } from '../errors/resource-not-found-error';
@@ -7,7 +7,7 @@ import { UseCase } from '../use-case.interface';
 
 type UpdateTaskStatusUseCaseInput = {
   id: string;
-  completed: boolean;
+  completed: TaskStatus;
 };
 
 type UpdateTaskStatusUseCaseOutput = Either<
@@ -29,11 +29,7 @@ export class UpdateTaskStatusUseCase
     const taskFound = await this.taskRepository.fetchById(input.id);
     if (!taskFound) return left(new ResourceNotFoundError('Task not found'));
 
-    if (input.completed) {
-      taskFound.markStatusAsCompleted();
-    } else {
-      taskFound.markStatusAsPending();
-    }
+    taskFound.updateStatusValue = input.completed;
 
     const taskUpdated = await this.taskRepository.update(taskFound);
     return rigth({ task: taskUpdated });
