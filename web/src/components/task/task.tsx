@@ -90,7 +90,7 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
 
   return (
     <div
-      className={`flex justify-between items-center p-4 border rounded-xl shadow-sm gap-4 ${
+      className={`flex justify-between items-center p-4 border rounded-xl shadow-sm gap-4 hover:bg-gray-50 ${
         isUpdatingStatus ? "opacity-50" : ""
       }${status === TaskStatus.COMPLETED ? "bg-gray-50/90 opacity-50" : ""}`}
     >
@@ -120,7 +120,7 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <span className="text-sm text-gray-500">
+        <span className="text-xs text-gray-500">
           Criado em: {formatDateBR(createdAt)}
         </span>
         <Button variant="ghost" size="icon" onClick={handleDeleteTask}>
