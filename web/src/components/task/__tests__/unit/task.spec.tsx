@@ -57,14 +57,14 @@ const taskMock: Tasks = {
   updatedAt: new Date("2023-10-01T12:00:00Z"),
 };
 
-test("renderiza título e data da tarefa", () => {
+test("should render the task title and creation date", () => {
   render(<Task data={taskMock} />);
 
   expect(screen.getByText("Some task title")).toBeInTheDocument();
   expect(screen.getByText(/Criado em:/)).toBeInTheDocument();
 });
 
-test("deleta a tarefa ao clicar no ícone de lixeira", async () => {
+test("should be able to delete the task", async () => {
   render(<Task data={taskMock} />);
   const deleteButton = screen.getByRole("button");
 
@@ -75,7 +75,7 @@ test("deleta a tarefa ao clicar no ícone de lixeira", async () => {
   });
 });
 
-test("marca a tarefa como COMPLETED ao clicar no checkbox", async () => {
+test("should be able to toggle the task status", async () => {
   render(<Task data={taskMock} />);
 
   const checkbox = screen.getByRole("checkbox");
