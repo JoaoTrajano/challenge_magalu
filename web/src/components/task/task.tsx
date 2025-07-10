@@ -89,7 +89,11 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
   }
 
   return (
-    <div className="flex justify-between items-center p-4 border rounded-xl shadow-sm gap-4">
+    <div
+      className={`flex justify-between items-center p-4 border rounded-xl shadow-sm gap-4 ${
+        isUpdatingStatus ? "opacity-50" : ""
+      }${status === TaskStatus.COMPLETED ? "bg-gray-50/90 opacity-50" : ""}`}
+    >
       <div className="flex items-center gap-2 max-w-full flex-1">
         {isUpdatingStatus ? (
           <Loader className="w-5 h-5 animate-spin" />
@@ -107,7 +111,7 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
         <div className="flex flex-col flex-1">
           <span
             className={`text-base text-gray-800  ${
-              status === TaskStatus.COMPLETED ? "line-through" : ""
+              status === TaskStatus.COMPLETED ? "line-through " : ""
             }`}
             style={{ wordBreak: "break-word" }}
           >
