@@ -1,8 +1,7 @@
-import { Button } from "../ui/button";
-import { Loader, Trash } from "lucide-react";
+import { Loader } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { formatDateBR } from "@/lib/utils";
-import { useDeleteTask, useUpdateTaskStatus } from "@/api/tasks";
+import { useUpdateTaskStatus } from "@/api/tasks";
 import { useCallback } from "react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
@@ -10,6 +9,7 @@ import { ResponseApi, Tasks, TaskStatus } from "@/api/tasks/@types";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ModalDeleteTask } from "./components/modal-delete-task";
 
 type Props = {
   data: Tasks;
@@ -29,19 +29,6 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
   } = useForm<MarkAsCompletedType>({
     resolver: zodResolver(markAsCompletedSchema),
   });
-
-  const { mutateAsync: deleteTask, isPending } = useDeleteTask({
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
-    },
-    onError: () => {
-      toast.error("Erro ao deletar tarefa!");
-    },
-  });
-
-  const handleDeleteTask = useCallback(async () => {
-    deleteTask({ id });
-  }, [id, deleteTask]);
 
   const { mutateAsync: updateTaskStatus, isPending: isUpdatingStatus } =
     useUpdateTaskStatus({
@@ -91,8 +78,8 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
   return (
     <div
       className={`flex justify-between items-center p-4 border rounded-xl shadow-sm gap-4 hover:bg-gray-50 ${
-        isUpdatingStatus ? "opacity-50" : ""
-      }${status === TaskStatus.COMPLETED ? "bg-gray-50/90 opacity-50" : ""}`}
+        status === TaskStatus.COMPLETED ? "bg-gray-50/90 opacity-50" : ""
+      }`}
     >
       <div className="flex items-center gap-2 max-w-full flex-1">
         {isUpdatingStatus ? (
@@ -123,13 +110,7 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
         <span className="text-xs text-gray-500">
           Criado em: {formatDateBR(createdAt)}
         </span>
-        <Button variant="ghost" size="icon" onClick={handleDeleteTask}>
-          {isPending ? (
-            <Loader className="w-5 h-5 animate-spin" />
-          ) : (
-            <Trash className="w-5 h-5 transition-transform duration-200 hover:scale-110" />
-          )}
-        </Button>
+        <ModalDeleteTask id={id} />
       </div>
     </div>
   );
