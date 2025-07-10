@@ -71,7 +71,10 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
       queryClient.getQueryData<ResponseApi<Tasks[]>>(cacheKey);
 
     if (!tasksListCache) {
-      console.warn("No tasks found in cache for key:", cacheKey);
+      console.warn(
+        "Não foi possível encontrar tarefas no cache para a chave:",
+        cacheKey
+      );
       return;
     }
 
@@ -100,9 +103,14 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
             }}
           />
         )}
-        <span className="text-base text-gray-800">{title}</span>
+        <span
+          className={`text-base text-gray-800 ${
+            status === TaskStatus.COMPLETED ? "line-through" : ""
+          }`}
+        >
+          {title}
+        </span>
       </div>
-
       <div className="flex items-center gap-4">
         <span className="text-sm text-gray-500">{formatDateBR(createdAt)}</span>
         <Button variant="ghost" size="icon" onClick={handleDeleteTask}>
