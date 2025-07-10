@@ -1,6 +1,6 @@
 import { Loader } from "lucide-react";
-import { Checkbox } from "../ui/checkbox";
-import { cn, formatDateBR } from "@/lib/utils";
+import { Checkbox } from "../../../ui/checkbox";
+import { formatDateBR } from "@/lib/utils";
 import { useUpdateTaskStatus } from "@/api/tasks";
 import { useCallback } from "react";
 import { toast } from "sonner";
@@ -10,6 +10,8 @@ import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ModalDeleteTask } from "./components/modal-delete-task";
+import { TaskTitle } from "./components/task-title";
+import { TaskContent } from "./components/task-content";
 
 type Props = {
   data: Tasks;
@@ -76,14 +78,7 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
   }
 
   return (
-    <div
-      className={cn(
-        `flex justify-between items-center p-4 border rounded-xl shadow-sm gap-4 hover:bg-gray-50`,
-        {
-          "bg-gray-50/90 opacity-50": status === TaskStatus.COMPLETED,
-        }
-      )}
-    >
+    <TaskContent status={status}>
       <div className="flex items-center gap-2 max-w-full flex-1">
         {isUpdatingStatus ? (
           <Loader className="w-5 h-5 animate-spin" />
@@ -98,16 +93,7 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
             }}
           />
         )}
-        <div className="flex flex-col flex-1">
-          <span
-            className={`text-base text-gray-800  ${
-              status === TaskStatus.COMPLETED ? "line-through " : ""
-            }`}
-            style={{ wordBreak: "break-word" }}
-          >
-            {title}
-          </span>
-        </div>
+        <TaskTitle title={title} status={status} />
       </div>
       <div className="flex items-center gap-4">
         <span className="text-xs text-gray-500">
@@ -115,6 +101,6 @@ export const Task = ({ data: { id, title, status, createdAt } }: Props) => {
         </span>
         <ModalDeleteTask id={id} />
       </div>
-    </div>
+    </TaskContent>
   );
 };

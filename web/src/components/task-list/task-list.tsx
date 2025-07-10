@@ -1,5 +1,5 @@
 import { useFetchTasks } from "@/api/tasks";
-import { Task } from "../task";
+import { Task } from "./components/task";
 import { useMemo } from "react";
 import SkeletonTaskList from "./components/skeleton-task-list";
 import { useTaskFilter } from "../filters/hooks/useFilters";
