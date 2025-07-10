@@ -2,9 +2,14 @@ import { useFetchTasks } from "@/api/tasks";
 import { Task } from "../task";
 import { useMemo } from "react";
 import SkeletonTaskList from "./components/skeleton-task-list";
+import { useTaskFilter } from "../filters/hooks/useFilters";
 
 export const TaskList = () => {
-  const { data: responseFetchTasks, isLoading } = useFetchTasks({});
+  const { status } = useTaskFilter();
+
+  const { data: responseFetchTasks, isLoading } = useFetchTasks({
+    status,
+  });
 
   const tasks = useMemo(
     () => (responseFetchTasks ? responseFetchTasks.value : []),
