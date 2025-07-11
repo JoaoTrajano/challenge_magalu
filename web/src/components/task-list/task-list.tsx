@@ -19,7 +19,7 @@ export const TaskList = () => {
   );
 
   const warning = useMemo(() => {
-    if (tasks.length > 0) return null;
+    if (tasks.length > 0 || isLoading) return null;
 
     if (!status) return <Warning message="Nenhuma tarefa criada." />;
 
@@ -30,7 +30,7 @@ export const TaskList = () => {
       return <Warning message="Nenhuma tarefa pendente." />;
 
     return null;
-  }, [tasks, status]);
+  }, [tasks, status, isLoading]);
 
   return (
     <div className="space-y-2 min-h-full">
