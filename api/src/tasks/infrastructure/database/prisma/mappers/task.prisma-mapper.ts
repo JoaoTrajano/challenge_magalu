@@ -7,7 +7,7 @@ export class TaskPrismaMapper {
     const taskEntitie = new TaskEntity(entity.title);
 
     taskEntitie.id = entity.id;
-    taskEntitie.status = entity.status as TaskStatus;
+    taskEntitie.updateStatusValue = entity.status as TaskStatus;
     taskEntitie.createdAt = entity.createdAt;
     taskEntitie.updatedAt = entity.updatedAt;
 
@@ -17,7 +17,7 @@ export class TaskPrismaMapper {
   static toPersistence(entity: TaskEntity): Prisma.TaskUncheckedCreateInput {
     return {
       title: entity.title,
-      status: entity.status,
+      status: entity.statusValue,
     };
   }
 }

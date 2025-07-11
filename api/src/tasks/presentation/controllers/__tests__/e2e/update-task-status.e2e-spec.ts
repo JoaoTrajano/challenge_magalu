@@ -38,7 +38,7 @@ describe('UpdateTaskStatusController e2e test', () => {
       const res = await request(app.getHttpServer())
         .patch(`/tasks/${created.id}`)
         .send({
-          completed: true,
+          newStatus: 'COMPLETED',
         });
 
       expect(res.statusCode).toBe(200);

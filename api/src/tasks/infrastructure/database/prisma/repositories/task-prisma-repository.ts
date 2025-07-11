@@ -39,6 +39,9 @@ export class TaskPrismaRepository implements TaskRepository {
 
     const tasks = await this.prismaService.task.findMany({
       where,
+      orderBy: {
+        createdAt: 'asc',
+      },
     });
     return tasks.map(TaskPrismaMapper.toDomain);
   }
