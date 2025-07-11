@@ -1,20 +1,22 @@
-# Monorepo - Backend com NestJS e Frontend com Next.js
+# Desafio Front-end - Consórcio Magalu
 
-Este projeto é um monorepo que integra uma **API RESTful desenvolvida com NestJS** e uma **interface web moderna construída com Next.js**. A arquitetura foi pensada para promover **escalabilidade, reuso de código e organização modular**, permitindo o uso de bibliotecas compartilhadas entre backend e frontend.
+Esse desafio tem como objetivo aferir conhecimentos diversos do universo de front-end: **HTML**,**CSS**,**Javascript**, semântica, acessibilidade, componentização
 
 ---
 
 ## Tecnologias Utilizadas
 
 ### Backend
-- **[NestJS](https://nestjs.com/)** — Framework progressivo para Node.js
+
+- **[NestJS](https://nestjs.com/)**
 - **TypeScript**
 - **Prisma ORM**
 - **PostgreSQL**
 - **Vitest + Supertest** para testes unitários e E2E
 
 ### Frontend
-- **[Next.js](https://nextjs.org/)** — Framework React com SSR e SPA
+
+- **[Next.js](https://nextjs.org/)**
 - **TypeScript**
 - **TailwindCSS**
 - **React Query** para chamadas à API
@@ -25,11 +27,21 @@ Este projeto é um monorepo que integra uma **API RESTful desenvolvida com NestJ
 - pnpm `9+`
 - Docker (se desejar usar containers de banco de dados)
 
-- ## 🧪 Scripts
+## Scripts
 
-Execute a partir da raiz do projeto:
+Execute a partir da raiz de cada projeto:
 
-| Comando                | Descrição                                  |
-|------------------------|--------------------------------------------|
-| `pnpm install`         | Instala todas as dependências              |
-| `pnpm dev`             | Inicia API e Web em modo desenvolvimento   |
+### Frontend (web)
+
+| Comando        | Descrição                                     |
+| -------------- | --------------------------------------------- |
+| `pnpm install` | Instala as dependências do frontend           |
+| `pnpm dev`     | Inicia o **frontend** em modo desenvolvimento |
+
+### Backend (api)
+
+| Comando                | Descrição                                                           |
+| ---------------------- | ------------------------------------------------------------------- |
+| `pnpm install`         | Instala todas as dependências de todos os pacotes                   |
+| `pnpm run start:dev`   | Inicia **api** em modo desenvolvimento                              |
+| `docker compose up -d` | Sobe os serviços definidos no `docker-compose.yml` em segundo plano |
