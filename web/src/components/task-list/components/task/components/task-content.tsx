@@ -10,7 +10,7 @@ export function TaskContent({ status, children }: Props) {
   return (
     <div
       className={cn(
-        `flex justify-between items-center p-4 border rounded-xl shadow-sm gap-4 hover:bg-gray-50`,
+        `flex justify-between items-center p-4 border rounded-xl shadow-sm gap-4 hover:bg-gray-50 w-96`,
         {
           "bg-gray-50/90 opacity-50": status === TaskStatus.COMPLETED,
         }

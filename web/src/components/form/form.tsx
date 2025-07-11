@@ -53,8 +53,11 @@ export const Form = () => {
   }
 
   return (
-    <form className="flex gap-2 mb-4" onSubmit={handleSubmit(handleAddTask)}>
-      <div className="space-y-2">
+    <form
+      className="flex gap-2 mb-4 w-full md:justify-center md:items-center"
+      onSubmit={handleSubmit(handleAddTask)}
+    >
+      <div className="space-y-2 flex-1">
         <Input
           id="title"
           className="flex-1 border rounded px-3 py-2"
@@ -65,11 +68,11 @@ export const Form = () => {
       </div>
       <Button
         type="submit"
-        className=" text-white px-4 py-2 rounded-sm"
+        className="text-white rounded-sm flex items-center justify-center md:px-4 md:py-2"
         disabled={isSubmitting}
       >
-        Adicionar Tarefa
-        <Plus className="ml-2" />
+        <span className="hidden md:block">Adicionar Tarefa</span>
+        <Plus className="self-center md:ml-2" />
       </Button>
     </form>
   );
