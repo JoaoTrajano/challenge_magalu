@@ -7,7 +7,7 @@ type Props = {
 
 const SkeletonTaskList = ({ count = 5 }: Props) => {
   return (
-    <div className="space-y-2 min-h-full">
+    <div className="space-y-2 min-h-full w-full">
       {Array.from({ length: count }).map((_, idx) => (
         <div
           key={idx}

@@ -33,7 +33,7 @@ export const TaskList = () => {
   }, [tasks, status, isLoading]);
 
   return (
-    <div className="space-y-2 min-h-full">
+    <div className="p-4 w-full flex flex-col items-center space-y-4">
       {warning}
       {isLoading ? (
         <SkeletonTaskList />
